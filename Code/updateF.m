@@ -1,6 +1,6 @@
 function F = updateF(n,c,dist,r)
     tmp = dist.^(-1/(r-1));
-    F = tmp./(sum(tmp,2)*ones(1,c));
+    F = tmp./(sum(tmp,2)*ones(1,c));     
     for i = 1 : n
         d = dist(i,:);
         if any(d' == 0)               % 有零说明有重合

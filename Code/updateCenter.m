@@ -44,8 +44,8 @@ function c_id = updateCenter(G,X,c_id,d,S,c,K)
             end
             c_id_(j) = row_idx(idx(i));
             dd = d(:,c_id_);
-            if minres > sum(sum((dd.^2).*G));       
-                minres = sum(sum((dd.^2).*G));; % 有更小的就更新
+            if minres > sum(sum((dd.^2).*G))       
+                minres = sum(sum((dd.^2).*G)); % 有更小的就更新
 %                 minindices = i;
                 c_id(j) = c_id_(j);
             end
