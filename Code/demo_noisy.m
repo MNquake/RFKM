@@ -1,6 +1,6 @@
 clc,clear; %清除命令，清空工作区，关闭所有窗口
-data = load('G:\Data\dataset\MSRA25_nosiy.mat','X');
-label = load('G:\Data\dataset\MSRA25_nosiy.mat','Y');
+data = load('E:\Tools\dataprocessing\olivetti_nosiy.mat','X');
+label = load('E:\Tools\dataprocessing\olivetti_nosiy.mat','Y');
 data = struct2cell(data);
 label = struct2cell(label);
 data = cell2mat(data);
@@ -9,20 +9,20 @@ data = double(data);
 data = mapminmax(data,0,1);
 data = data';
 % label = label+1;
-label = label';
-k = 12;                        % 类别
+% label = label';
+k = 8;                        % 类别
 K = 25;
 cluster_name = 'MSRA25';
 num = 1;
-i = 60;
+i = 150;
 alphat=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y'];
 percent = 0.1;
 excel = actxserver('Excel.Application');
-workbook = excel.Workbooks.Open('G:\Data\RFKM\new\result.xlsx');
-worksheet = workbook.Sheets.Item(5);
+workbook = excel.Workbooks.Open('E:\RFKM\result\RFKM_result_noise.xlsx');
+worksheet = workbook.Sheets.Item(9);
 for r = 1.1 : 0.1 : 2 
-for percent = 0.05 : 0.1 : 0.35
-%for K = 5 : 10 : 55
+for percent = 0 : 0.1 : 0.4
+for K = 5 : 30 : 65
     begin = [alphat(1),num2str(num)];
     ends = [alphat(3),num2str(num)];
     ff = [begin,':',ends];
@@ -52,7 +52,7 @@ while 0<1
     S(zero_rows,:) = 0;                 %选择为噪声点的位置置为0，表示为噪声，非噪声则为1
     
     center = zeros(row,k);
-    [F, obj_RFKM, iter, cid] = newRFKM(F, r, data, noise,K,S);
+    [F, obj_RFKM, iter, cid, S] = newRFKM(F, r, data, noise,K,S);
 %     close all;
     [~,max_F] = max(F,[],2);
     [idx,~] = find(S(:,1)~=0);
@@ -70,7 +70,7 @@ while 0<1
     [label_idx,~] = find(label == 0);
 
     C = intersect(data_idx,label_idx);
-    noiseACC = length(C) / length(data_idx);
+    noiseACC = length(C) / length(label_idx);
 
     result(1,1)=iter;
     result(2,1)=obj_RFKM(iter);
@@ -93,7 +93,7 @@ end
     i = i - 1;
     time = (i * toc) / 3600;
     fprintf('此次迭代用时：%f s, 剩余迭代次数：%d 次，算法剩余时间：%f h\n',toc, i, time);
-%end
+end
 end
 end
 workbook.Close(false);

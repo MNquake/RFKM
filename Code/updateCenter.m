@@ -21,7 +21,7 @@ function c_id = updateCenter(G,X,c_id,d,S,c,K)
         else
             len = col;
         end
-                         % row_idx(idx(1)): idx存放的是该点原本在row_idx中的位置，而row_idx记录的是第几个点
+                         % row_idx(idx(t)): idx存放的是该点原本在row_idx中的位置，而row_idx记录的是第几个点
         t = 1;
         while S(row_idx(idx(t)),1) == 0                     % 处理噪音点 直接跳过噪音点       
             t = t + 1;

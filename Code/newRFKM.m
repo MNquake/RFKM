@@ -1,4 +1,4 @@
-function [F, obj_RFKM, iter, c_id] = newRFKM(F, r, X, Noise, K, S)
+function [F, obj_RFKM, iter, c_id, S] = newRFKM(F, r, X, Noise, K, S)
 
     [~, n] = size(X);       % 取数据量
     c = size(F, 2);         % 取类别数          
